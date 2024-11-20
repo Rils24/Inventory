@@ -1,0 +1,481 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    background: url('https://img.freepik.com/premium-vector/warehouse-interior-parcel-box-rack-logistic-delivery-cargo-service-concept-rows-shelves_48369-23532.jpg?w=900') no-repeat center center fixed;
+    background-size: cover;
+    background-blend-mode: overlay;
+}
+
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    background-color: #2c3e50;
+    color: white;
+    transition: left 0.3s ease-in-out;
+    z-index: 1;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.7);
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #1a252f;
+    border-bottom: 1px solid #e7dada;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.close-btn {
+    font-size: 24px;
+    cursor: pointer;
+    color: #ecf0f1;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid #2c3e50;
+}
+
+.sidebar-menu li a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    transition: background-color 0.3s, padding-left 0.3s;
+    padding: 15px;
+    border-radius: 0 25px 25px 0;
+}
+
+.sidebar-menu li a:hover {
+    background-color: #1abc9c;
+    padding-left: 40px;
+}
+
+li.logo a {
+    display: flex;
+    align-items: center;
+}
+
+li.logo a i {
+    margin-right: 10px; /* Anda bisa menyesuaikan nilai ini sesuai kebutuhan */
+}
+
+
+.logout {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: 63%;
+    text-align: center;
+}
+
+.content {
+    margin-left: 0;
+    flex-grow: 1;
+    padding: 20px;
+    transition: margin-left 0.3s ease-in-out;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #34495e;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.open-btn {
+    font-size: 24px;
+    cursor: pointer;
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.open-btn:hover {
+    background-color: #6a7d7d;
+}
+
+.filter-search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 20px; /* Menambahkan margin atas */
+}
+
+.search-container {
+    width: 40%; /* Lebar container pencarian */
+}
+
+.search-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-container input[type="text"]:focus {
+    border-color: #1abc9c;
+    box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
+    outline: none;
+}
+
+.filter-container {
+    width: 55%; /* Lebar container filter */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Jarak antara elemen form */
+}
+
+.filter-container form {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Jarak antara elemen form */
+}
+
+.filter-container label {
+    font-weight: bold;
+    color: #333;
+}
+
+.filter-container select,
+.filter-container input[type="date"],
+.filter-container input[type="month"],
+.filter-container input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.filter-container select:focus,
+.filter-container input[type="date"]:focus,
+.filter-container input[type="month"]:focus,
+.filter-container input[type="number"]:focus {
+    border-color: #1abc9c;
+    box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
+    outline: none;
+}
+
+.filter-container button {
+    padding: 10px 20px;
+    background-color: #1abc9c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.filter-container button:hover {
+    background-color: #6a7d7d;
+}
+/* Gaya tombol cetak laporan */
+.filter-container button:nth-of-type(2) {
+    background-color: #ed6157; /* Warna latar belakang untuk tombol cetak */
+}
+
+.filter-container button:nth-of-type(2):hover {
+    background-color: #6a7d7d; /* Warna latar belakang saat tombol cetak dihover */
+}
+
+
+/* Style untuk menampilkan form berdasarkan pilihan filter_type */
+#tanggal_form,
+#bulan_form,
+#tahun_form {
+    display: none;
+}
+
+#filter_type:focus + div {
+    display: block;
+}
+
+
+
+
+.dashboard {
+    margin-top: 20px;
+}
+
+.dashboard h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 5px;
+    flex: 1;
+    min-width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border: 2px solid #1abc9c;
+}
+
+.card h3 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.card p {
+    font-size: 18px;
+    color: #666;
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        left: -100%;
+    }
+
+    .cards {
+        flex-direction: column;
+    }
+}
+
+.table-responsive {
+    overflow-x: auto;
+    margin: 20px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+
+thead th {
+    background-color: #34495e;
+    color: white;
+    text-align: left;
+    padding: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #e2e2e2;
+    transition: background-color 0.3s;
+}
+
+tbody td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    background-color: white;
+    color: black;
+    transition: background-color 0.3s;
+}
+
+tbody tr td:first-child {
+    font-weight: bold;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    color: #030807;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 2px solid #ddd;
+    margin: 0 4px;
+    border-radius: 4px;
+}
+
+.pagination a.active {
+    background-color: #1abc9c;
+    color: white;
+    border: 1px solid #1abc9c;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+.add-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #34495e;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.add-btn:hover {
+    background-color: #1abc9c;
+    transform: translateY(-2px);
+}
+
+.add-btn:active {
+    background-color: #16a085;
+    transform: translateY(0);
+}
+
+.icon-link {
+    background-color: #f0f0f0; /* Light grey background */
+    border: none; /* Remove border */
+    color: #333; /* Dark grey text color */
+    padding: 5px 10px; /* Smaller padding for the button */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline from text */
+    display: inline-block; /* Display as inline-block */
+    font-size: 14px; /* Smaller font size */
+    margin: 3px 1px; /* Smaller margin between buttons */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.icon-link i {
+    margin-right: 6px; /* Space between icon and text */
+}
+
+.icon-link:hover {
+    background-color: #ddd; /* Darker grey on hover */
+}
+
+.icon-link.ubah {
+    background-color: #1abc9c; /* Green background for "Ubah" */
+    color: white; /* White text color */
+}
+
+.icon-link.hapus {
+    background-color: #ed6157; /* Red background for "Hapus" */
+    color: white; /* White text color */
+}
+
+.icon-link.ubah:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.icon-link.hapus:hover {
+    background-color: #e53935; /* Darker red on hover */
+}
+
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        left: -100%;
+    }
+
+    .cards {
+        flex-direction: column;
+    }
+}
+
+.charts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.chart-container {
+    flex: 1 1 45%;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.chart-container canvas {
+    width: 100% !important;
+    height: auto !important;
+}
+
+@media (max-width: 768px) {
+    .chart-container {
+        flex: 1 1 100%;
+    }
+}
+
+/* CSS untuk tampilan cetak */
+@media print {
+    .print-button {
+        display: none; /* Menyembunyikan tombol cetak saat mode cetak aktif */
+    }
+}
