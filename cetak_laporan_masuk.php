@@ -35,6 +35,7 @@ $totalTransaksi = $resultTotalTransaksi[0]['total'] ? $resultTotalTransaksi[0]['
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,6 +48,7 @@ $totalTransaksi = $resultTotalTransaksi[0]['total'] ? $resultTotalTransaksi[0]['
             padding: 20px;
             background-color: #f4f4f4;
         }
+
         .content {
             max-width: 800px;
             margin: auto;
@@ -55,50 +57,65 @@ $totalTransaksi = $resultTotalTransaksi[0]['total'] ? $resultTotalTransaksi[0]['
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         .header h1 {
             text-align: center;
             color: #333;
         }
+
         .header p {
             text-align: center;
             color: #666;
         }
+
         .table-responsive {
             margin-top: 20px;
             overflow-x: auto;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
-        table, th, td {
+
+        table,
+        th,
+        td {
             border: 1px solid #ddd;
         }
-        th, td {
+
+        th,
+        td {
             padding: 12px;
             text-align: left;
         }
+
         th {
             background-color: #00509e;
             color: white;
         }
+
         tr:nth-child(even) {
             background-color: #e0f0ff;
         }
+
         tr:hover {
             background-color: #cfe2ff;
         }
+
         .total-transaksi {
             text-align: right;
             font-size: 1.2em;
             margin-top: 20px;
             color: #333;
         }
+
         .print-button {
             text-align: center;
             margin-top: 20px;
         }
+
         .print-button button {
             background-color: #00509e;
             color: white;
@@ -108,15 +125,18 @@ $totalTransaksi = $resultTotalTransaksi[0]['total'] ? $resultTotalTransaksi[0]['
             cursor: pointer;
             font-size: 16px;
         }
+
         .print-button button:hover {
             background-color: #003f7e;
         }
+
         @media print {
             body {
                 margin: 0;
                 padding: 0;
                 background-color: white;
             }
+
             .content {
                 box-shadow: none;
                 padding: 0;
@@ -124,18 +144,22 @@ $totalTransaksi = $resultTotalTransaksi[0]['total'] ? $resultTotalTransaksi[0]['
                 border: none;
                 width: 100%;
             }
+
             .print-button {
                 display: none;
             }
+
             th {
                 background-color: #003f7e !important;
                 -webkit-print-color-adjust: exact;
                 color: white !important;
             }
+
             tr:nth-child(even) {
                 background-color: #e0f0ff !important;
                 -webkit-print-color-adjust: exact;
             }
+
             tr:hover {
                 background-color: #cfe2ff !important;
                 -webkit-print-color-adjust: exact;
@@ -143,6 +167,7 @@ $totalTransaksi = $resultTotalTransaksi[0]['total'] ? $resultTotalTransaksi[0]['
         }
     </style>
 </head>
+
 <body>
     <div class="content">
         <div class="header">
@@ -163,12 +188,12 @@ $totalTransaksi = $resultTotalTransaksi[0]['total'] ? $resultTotalTransaksi[0]['
                             <th>Jumlah</th>
                             <th>Harga</th>
                             <th>Total Harga</th>
-                            
+
                         </tr>
                     </thead>
                     <tbody>
                         <?php $i = 1; ?>
-                        <?php foreach ($masuk as $row) : ?>
+                        <?php foreach ($masuk as $row): ?>
                             <tr>
                                 <td><?= $i; ?></td>
                                 <td><?= $row["Nama"]; ?></td>
@@ -176,7 +201,8 @@ $totalTransaksi = $resultTotalTransaksi[0]['total'] ? $resultTotalTransaksi[0]['
                                 <td><?= $row["Tanggal_masuk"]; ?></td>
                                 <td><?= $row["jumlah"]; ?></td>
                                 <td><?= 'Rp ' . number_format($row["harga"], 2, ',', '.'); ?></td>
-                                <td><?= 'Rp ' . number_format($row["harga"] * $row["jumlah"], 2, ',', '.'); ?></td> <!-- Menampilkan total harga per item -->
+                                <td><?= 'Rp ' . number_format($row["harga"] * $row["jumlah"], 2, ',', '.'); ?></td>
+                                <!-- Menampilkan total harga per item -->
                             </tr>
                             <?php $i++; ?>
                         <?php endforeach; ?>
@@ -192,4 +218,5 @@ $totalTransaksi = $resultTotalTransaksi[0]['total'] ? $resultTotalTransaksi[0]['
         </div>
     </div>
 </body>
+
 </html>
