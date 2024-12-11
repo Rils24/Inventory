@@ -1,4 +1,5 @@
 <?php
+require 'function.php';
 // Ambil semua data barang tidak tersedia
 $queryDataTidakTersedia = "SELECT 
                              Nama, 
