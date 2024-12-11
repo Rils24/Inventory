@@ -46,6 +46,7 @@ unset($barang);
             <li class="logo"><a href="masuk.php"><i class="fas fa-arrow-down"></i> Barang Masuk</a></li>
             <li class="logo"><a href="keluar.php"><i class="fas fa-arrow-up"></i> Barang Keluar</a></li>
             <li class="logo"><a href="#"><i class="fas fa-warehouse"></i> Barang Tersedia</a></li>
+            <li class="logo"><a href="tidak_tersedia.php"><i class="fas fa-box-open"></i> Barang Tidak Tersedia</a></li>
             <li class="logo"><a class="logout" href="logout.php"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
         </ul>
     </div>
