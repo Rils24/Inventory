@@ -4,32 +4,45 @@ require 'function.php';
 
 // Fetch barang masuk data for the dropdown
 $barangMasuk = $conn->query("
-    SELECT Nama, jenis, harga, SUM(jumlah) AS total_jumlah 
-    FROM masuk 
-    GROUP BY Nama, jenis, harga
+    SELECT 
+        m.Nama, 
+        m.jenis, 
+        m.harga, 
+        COALESCE(SUM(m.jumlah), 0) - COALESCE((SELECT SUM(k.jumlah) FROM keluar k WHERE k.Nama = m.Nama), 0) AS stok
+    FROM masuk m
+    GROUP BY m.Nama, m.jenis, m.harga
+    HAVING stok > 0
 ");
 
 // Check if the form is submitted
 if (isset($_POST["submit"])) {
-    // Retrieve data from each element in the form
     $Nama = $_POST["Nama"];
     $jenis = $_POST["jenis"];
     $Tanggal_keluar = $_POST["Tanggal_keluar"];
     $jumlah = $_POST["jumlah"];
     $harga = $_POST["harga"];
 
-    // Prepare an insert statement
-    $stmt = $conn->prepare("INSERT INTO keluar (Nama, jenis, Tanggal_keluar, jumlah, harga) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssii", $Nama, $jenis, $Tanggal_keluar, $jumlah, $harga);
+    // Get current stock
+    $result = $conn->query("SELECT 
+        COALESCE(SUM(m.jumlah), 0) - COALESCE((SELECT SUM(k.jumlah) FROM keluar k WHERE k.Nama = m.Nama), 0) AS stok
+        FROM masuk m WHERE m.Nama = '$Nama'
+        GROUP BY m.Nama");
+    $stok = $result->fetch_assoc()['stok'];
 
-    // Execute the query and check for errors
-    if ($stmt->execute()) {
-        echo "<div style='background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px;'>Data successfully inserted!</div>";
+    if ($jumlah > $stok) {
+        echo "<div style='background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px;'>Error: Jumlah barang keluar melebihi stok yang tersedia!</div>";
     } else {
-        echo "<div style='background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px;'>Error: " . $stmt->error . "</div>";
-    }
+        // Prepare an insert statement
+        $stmt = $conn->prepare("INSERT INTO keluar (Nama, jenis, Tanggal_keluar, jumlah, harga) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssii", $Nama, $jenis, $Tanggal_keluar, $jumlah, $harga);
 
-    $stmt->close();
+        if ($stmt->execute()) {
+            echo "<div style='background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px;'>Data successfully inserted!</div>";
+        } else {
+            echo "<div style='background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px;'>Error: " . $stmt->error . "</div>";
+        }
+        $stmt->close();
+    }
 }
 ?>
 
@@ -45,24 +58,9 @@ if (isset($_POST["submit"])) {
             const barangData = JSON.parse(document.getElementById('Nama').selectedOptions[0].dataset.details);
             document.getElementById('jenis').value = barangData.jenis;
             document.getElementById('harga').value = Math.ceil(barangData.harga * 1.1); // Harga 10% lebih mahal
+            document.getElementById('stok').textContent = barangData.stok;
         }
     </script>
-    <style>
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 16px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        select:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
-        }
-    </style>
 </head>
 <body>
     <div class="form-container">
@@ -75,8 +73,8 @@ if (isset($_POST["submit"])) {
                         <option value="">-- Pilih Barang --</option>
                         <?php while ($row = $barangMasuk->fetch_assoc()) : ?>
                             <option value="<?= $row['Nama'] ?>" 
-                                data-details='{"jenis":"<?= $row['jenis'] ?>","harga":<?= $row['harga'] ?>,"total_jumlah":<?= $row['total_jumlah'] ?>}'>
-                                <?= $row['Nama'] ?> (Total: <?= $row['total_jumlah'] ?>)
+                                data-details='{"jenis":"<?= $row['jenis'] ?>","harga":<?= $row['harga'] ?>,"stok":<?= $row['stok'] ?>}'>
+                                <?= $row['Nama'] ?> (Stok: <?= $row['stok'] ?>)
                             </option>
                         <?php endwhile; ?>
                     </select>
@@ -101,10 +99,6 @@ if (isset($_POST["submit"])) {
                     <button type="submit" name="submit">Tambah</button>
                 </li>
             </ul>
-
-            <div class="back-container">
-                <a href="keluar.php" class="back-btn">Back</a>
-            </div>
         </form>
     </div>
 </body>
