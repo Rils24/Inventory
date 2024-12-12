@@ -61,7 +61,7 @@ if (isset($_POST["submit"])) {
             document.getElementById('stok').textContent = barangData.stok;
         }
     </script>
-     <style>
+    <style>
         select {
             width: 100%;
             padding: 10px;
@@ -116,7 +116,7 @@ if (isset($_POST["submit"])) {
                 </li>
             </ul>
             <div class="back-container">
-                <a href="keluar.php" class="back-btn">Back</a>
+                <a href="masuk.php" class="back-btn">Back</a>
             </div>
         </form>
     </div>
