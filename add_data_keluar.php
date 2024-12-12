@@ -1,47 +1,43 @@
 <?php
-// Koneksi ke database
+// Connect to the database
 require 'function.php';
 
-// Ambil data barang masuk untuk dropdown, kecuali barang yang sudah ditandai sebagai keluar
-$barangMasuk = $conn->query("
-    SELECT Nama, jenis, harga 
-    FROM masuk 
-    WHERE Nama NOT IN (SELECT Nama FROM keluar)
-");
+// Fetch barang masuk data for the dropdown
+$barangMasuk = $conn->query("SELECT Nama, jenis, harga FROM masuk");
 
-// Periksa apakah formulir disubmit
+// Check if the form is submitted
 if (isset($_POST["submit"])) {
-    // Ambil data dari setiap elemen dalam formulir
+    // Retrieve data from each element in the form
     $Nama = $_POST["Nama"];
     $jenis = $_POST["jenis"];
     $Tanggal_keluar = $_POST["Tanggal_keluar"];
     $jumlah = $_POST["jumlah"];
     $harga = $_POST["harga"];
 
-    // Siapkan pernyataan insert
+    // Prepare an insert statement
     $stmt = $conn->prepare("INSERT INTO keluar (Nama, jenis, Tanggal_keluar, jumlah, harga) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("sssii", $Nama, $jenis, $Tanggal_keluar, $jumlah, $harga);
 
-    // Eksekusi kueri dan periksa kesalahan
+    // Execute the query and check for errors
     if ($stmt->execute()) {
-        // Data berhasil dimasukkan
-        echo "<div style='background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px;'>Data berhasil dimasukkan!</div>";
+        // Data inserted successfully
+        echo "<div style='background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px;'>Data successfully inserted!</div>";
     } else {
-        // Terjadi kesalahan saat memasukkan data
-        echo "<div style='background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px;'>Kesalahan: " . $stmt->error . "</div>";
+        // Error occurred while inserting data
+        echo "<div style='background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px;'>Error: " . $stmt->error . "</div>";
     }
 
-    // Tutup pernyataan
+    // Close the statement
     $stmt->close();
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Data</title>
+    <title>Add Data</title>
     <link rel="stylesheet" href="add_data.css">
     <script>
         function updateForm() {
@@ -105,7 +101,7 @@ if (isset($_POST["submit"])) {
             </ul>
 
             <div class="back-container">
-                <a href="keluar.php" class="back-btn">Kembali</a>
+                <a href="keluar.php" class="back-btn">Back</a>
             </div>
         </form>
     </div>
