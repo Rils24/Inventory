@@ -3,7 +3,11 @@
 require 'function.php';
 
 // Fetch barang masuk data for the dropdown
-$barangMasuk = $conn->query("SELECT Nama, jenis, harga FROM masuk");
+$barangMasuk = $conn->query("
+    SELECT Nama, jenis, harga, SUM(jumlah) AS total_jumlah 
+    FROM masuk 
+    GROUP BY Nama, jenis, harga
+");
 
 // Check if the form is submitted
 if (isset($_POST["submit"])) {
@@ -20,14 +24,11 @@ if (isset($_POST["submit"])) {
 
     // Execute the query and check for errors
     if ($stmt->execute()) {
-        // Data inserted successfully
         echo "<div style='background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px;'>Data successfully inserted!</div>";
     } else {
-        // Error occurred while inserting data
         echo "<div style='background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px;'>Error: " . $stmt->error . "</div>";
     }
 
-    // Close the statement
     $stmt->close();
 }
 ?>
@@ -73,8 +74,9 @@ if (isset($_POST["submit"])) {
                     <select name="Nama" id="Nama" onchange="updateForm()" required>
                         <option value="">-- Pilih Barang --</option>
                         <?php while ($row = $barangMasuk->fetch_assoc()) : ?>
-                            <option value="<?= $row['Nama'] ?>" data-details='{"jenis":"<?= $row['jenis'] ?>","harga":<?= $row['harga'] ?>}'>
-                                <?= $row['Nama'] ?>
+                            <option value="<?= $row['Nama'] ?>" 
+                                data-details='{"jenis":"<?= $row['jenis'] ?>","harga":<?= $row['harga'] ?>,"total_jumlah":<?= $row['total_jumlah'] ?>}'>
+                                <?= $row['Nama'] ?> (Total: <?= $row['total_jumlah'] ?>)
                             </option>
                         <?php endwhile; ?>
                     </select>
