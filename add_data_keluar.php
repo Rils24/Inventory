@@ -3,7 +3,7 @@
 require 'function.php';
 
 // Fetch barang masuk data for the dropdown
-$barangMasuk = $conn->query("SELECT Nama, jenis, harga FROM barang_masuk");
+$barangMasuk = $conn->query("SELECT Nama, jenis, harga FROM masuk");
 
 // Check if the form is submitted
 if (isset($_POST["submit"])) {
