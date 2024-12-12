@@ -2,6 +2,9 @@
 // Connect to the database
 require 'function.php';
 
+// Fetch barang masuk data for the dropdown
+$barangMasuk = $conn->query("SELECT Nama, jenis, harga FROM barang_masuk");
+
 // Check if the form is submitted
 if (isset($_POST["submit"])) {
     // Retrieve data from each element in the form
@@ -36,6 +39,13 @@ if (isset($_POST["submit"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Data</title>
     <link rel="stylesheet" href="add_data.css">
+    <script>
+        function updateForm() {
+            const barangData = JSON.parse(document.getElementById('Nama').selectedOptions[0].dataset.details);
+            document.getElementById('jenis').value = barangData.jenis;
+            document.getElementById('harga').value = Math.ceil(barangData.harga * 1.1); // Harga 10% lebih mahal
+        }
+    </script>
 </head>
 <body>
     <div class="form-container">
@@ -44,11 +54,18 @@ if (isset($_POST["submit"])) {
             <ul>
                 <li>
                     <label for="Nama">Nama:</label>
-                    <input type="text" name="Nama" id="Nama" required>
+                    <select name="Nama" id="Nama" onchange="updateForm()" required>
+                        <option value="">-- Pilih Barang --</option>
+                        <?php while ($row = $barangMasuk->fetch_assoc()) : ?>
+                            <option value="<?= $row['Nama'] ?>" data-details='{"jenis":"<?= $row['jenis'] ?>","harga":<?= $row['harga'] ?>}'>
+                                <?= $row['Nama'] ?>
+                            </option>
+                        <?php endwhile; ?>
+                    </select>
                 </li>
                 <li>
                     <label for="jenis">Jenis:</label>
-                    <input type="text" name="jenis" id="jenis" required>
+                    <input type="text" name="jenis" id="jenis" readonly required>
                 </li>
                 <li>
                     <label for="Tanggal_keluar">Tanggal keluar:</label>
@@ -60,7 +77,7 @@ if (isset($_POST["submit"])) {
                 </li>
                 <li>
                     <label for="harga">Harga:</label>
-                    <input type="number" name="harga" id="harga" required>
+                    <input type="number" name="harga" id="harga" readonly required>
                 </li>
                 <li>
                     <button type="submit" name="submit">Tambah</button>
@@ -74,4 +91,3 @@ if (isset($_POST["submit"])) {
     </div>
 </body>
 </html>
-
