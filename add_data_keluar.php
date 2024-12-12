@@ -3,7 +3,7 @@
 require 'function.php';
 
 // Fetch barang masuk data for the dropdown
-$barangMasuk = $conn->query("SELECT Nama, jenis, harga FROM masuk");
+$barangMasuk = $conn->query("SELECT Nama, jenis, harga FROM barang_masuk");
 
 // Check if the form is submitted
 if (isset($_POST["submit"])) {
@@ -46,6 +46,22 @@ if (isset($_POST["submit"])) {
             document.getElementById('harga').value = Math.ceil(barangData.harga * 1.1); // Harga 10% lebih mahal
         }
     </script>
+    <style>
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        }
+    </style>
 </head>
 <body>
     <div class="form-container">
