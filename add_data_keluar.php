@@ -65,7 +65,16 @@ if (isset($_POST["submit"])) {
             <ul>
                 <li>
                     <label for="Nama">Nama:</label>
-                    <input type="text" name="Nama" id="Nama" required>
+                    <select name="Nama" id="Nama" required>
+                        <?php
+                        // Fetch item names from barang_masuk
+                        $itemQuery = "SELECT Nama FROM barang_masuk";
+                        $itemResult = $conn->query($itemQuery);
+                        while ($item = $itemResult->fetch_assoc()) {
+                            echo "<option value='" . $item['Nama'] . "'>" . $item['Nama'] . "</option>";
+                        }
+                        ?>
+                    </select>
                 </li>
                 <li>
                     <label for="Tanggal_keluar">Tanggal keluar:</label>
