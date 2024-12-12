@@ -61,6 +61,22 @@ if (isset($_POST["submit"])) {
             document.getElementById('stok').textContent = barangData.stok;
         }
     </script>
+     <style>
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        }
+    </style>
 </head>
 <body>
     <div class="form-container">
@@ -99,6 +115,9 @@ if (isset($_POST["submit"])) {
                     <button type="submit" name="submit">Tambah</button>
                 </li>
             </ul>
+            <div class="back-container">
+                <a href="keluar.php" class="back-btn">Back</a>
+            </div>
         </form>
     </div>
 </body>
