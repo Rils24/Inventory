@@ -116,7 +116,7 @@ if (isset($_POST["submit"])) {
                 </li>
             </ul>
             <div class="back-container">
-                <a href="masuk.php" class="back-btn">Back</a>
+                <a href="keluar.php" class="back-btn">Back</a>
             </div>
         </form>
     </div>
