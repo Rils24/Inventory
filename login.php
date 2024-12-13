@@ -68,7 +68,7 @@ $conn->close();
 
             <button type="submit">Login</button>
         </form>
-        <p>Belum punya akun? <a href="registrasi.php">Silahkan daftar</a></p>
+        <!-- <p>Belum punya akun? <a href="registrasi.php">Silahkan daftar</a></p> -->
     </div>
 </body>
 </html>
