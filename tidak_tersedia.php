@@ -49,7 +49,7 @@ $tidakTersedia = query($queryDataTidakTersedia);
             </div>
             <div class="filter-container">
                 <form action="cetak_laporan_tidak_tersedia.php" method="get" target="_blank">
-                    <button type="submit">Cetak Laporan</button>
+                    <!-- <button type="submit">Cetak Laporan</button> -->
                 </form>
             </div>
         </div>
